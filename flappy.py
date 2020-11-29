@@ -1,12 +1,6 @@
 import pygame
 import random
-from pygame.locals import (
-    K_SPACE,
-    QUIT,
-    K_ESCAPE,
-    KEYDOWN,
-    KEYUP
-)
+from pygame.locals import K_SPACE, QUIT, K_ESCAPE, KEYDOWN, KEYUP
 
 
 # making the game part first
@@ -23,6 +17,9 @@ class blc(pygame.sprite.Sprite):
             self.kill()
 
 
+WHITE = (0, 0, 0)  # CJ
+
+
 class blocker(object):
     def __init__(self):
         self.hgt = random.randint(200, 700)
@@ -36,7 +33,9 @@ class blocker(object):
 class player(pygame.sprite.Sprite):
     def __init__(self):
         super(player, self).__init__()
-        self.surf = pygame.Surface((10, 10), )
+        self.surf = pygame.Surface(
+            (10, 10),
+        )
         self.surf.fill((0, 0, 0))
         self.rect = self.surf.get_rect(center=(100, 450))
 
@@ -47,6 +46,8 @@ class player(pygame.sprite.Sprite):
         self.rect.move_ip(0, 3)
 
 
+font_name = pygame.font.match_font("arial")
+
 # starting pygame module
 pygame.init()
 # initializing the screen size
@@ -54,6 +55,19 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+
+def draw_text(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    surf.blit(text_surface, text_rect)
+
+
+def show_go_screen():
+    draw_text(screen, " You Lost", 64, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4)
+    pygame.display.flip()
+
 
 # Create a custom event for adding a new enemy
 ADDBLOCKER = pygame.USEREVENT + 1
@@ -102,3 +116,6 @@ while running:
         blockers.update()
         update_timer = 0
     pygame.display.flip()
+show_go_screen()
+print("Game Over")
+pygame.quit()
