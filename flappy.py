@@ -65,8 +65,8 @@ running = True
 jump = 0
 update_timer = 0
 while running:
-    if pygame.sprite.spritecollideany(player,blockers):
-        running=False
+    if pygame.sprite.spritecollideany(player, blockers):
+        running = False
     for event in pygame.event.get():
         if event.type == ADDBLOCKER:
             tem = blocker()
