@@ -17,7 +17,7 @@ class blc(pygame.sprite.Sprite):
             self.kill()
 
 
-WHITE = (0, 0, 0)  # CJ
+WHITE = (0, 0, 0)
 
 
 class blocker(object):
