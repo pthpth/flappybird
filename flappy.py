@@ -7,9 +7,9 @@ from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
 
 
 # val = open("values.txt", "a")
+score=0
 
-
-def sigmoid(z):
+def sigmogid(z):
     return 1 / (1 + np.exp(z * -1))
 
 
@@ -101,7 +101,7 @@ def show_go_screen():
 
 # Create a custom event for adding a new enemy
 ADDBLOCKER = pygame.USEREVENT + 1
-pygame.time.set_timer(ADDBLOCKER, 200)
+pygame.time.set_timer(ADDBLOCKER, 400)
 blockers = pygame.sprite.Group()
 counter_1 = 0
 subject = []
