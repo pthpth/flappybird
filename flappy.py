@@ -3,6 +3,9 @@ import random
 import numpy as np
 from pygame.locals import K_SPACE, QUIT, K_ESCAPE, KEYDOWN, KEYUP
 
+score = 0
+score_timer = 0
+
 
 # making the game part first
 class blc(pygame.sprite.Sprite):
@@ -15,15 +18,10 @@ class blc(pygame.sprite.Sprite):
     def update(self):
         self.rect.move_ip(-1, 0)
         if self.rect.left < 100:
-            update_data(self)
             self.kill()
 
 
 WHITE = (0, 0, 0)
-
-
-def update_data(data: blc):
-    blocker_pos.remove(data)
 
 
 class blocker(object):
@@ -60,7 +58,7 @@ class player(pygame.sprite.Sprite):
 font_name = pygame.font.match_font("arial")
 
 INPUT_LAYER = []
-
+difficulty = 2
 blocker_pos = []
 # starting pygame module
 pygame.init()
@@ -86,7 +84,8 @@ def show_go_screen():
 
 # Create a custom event for adding a new enemy
 ADDBLOCKER = pygame.USEREVENT + 1
-pygame.time.set_timer(ADDBLOCKER, 800)
+timer = int(800 // difficulty)
+pygame.time.set_timer(ADDBLOCKER, timer)
 blockers = pygame.sprite.Group()
 counter_1 = 0
 player = player()
@@ -94,13 +93,12 @@ running = True
 jump = 0
 update_timer = 0
 while running:
+    score_timer += 1
     if pygame.sprite.spritecollideany(player, blockers):
         running = False
     for event in pygame.event.get():
         if event.type == ADDBLOCKER:
             tem = blocker()
-            blocker_pos.append(tem.top_layer)
-            blocker_pos.append(tem.bottom_layer)
             blockers.add(tem.top_layer)
             blockers.add(tem.bottom_layer)
             tem = None
@@ -132,17 +130,19 @@ while running:
     if update_timer % 5 == 0:
         blockers.update()
         update_timer = 0
-
-    if len(blocker_pos) > NUMBER_OF_OBS and counter_1 % 800 == 0:
-        counter_1 = 0
-        INPUT_LAYER = []
-        for x in range(0, NUMBER_OF_OBS):
-            INPUT_LAYER.append(blocker_pos[2 * x].rect.left - player.rect.right)
-            INPUT_LAYER.append(blocker_pos[2 * x].rect.bottom - player.rect.top)
-            INPUT_LAYER.append(blocker_pos[2 * x + 1].rect.left - player.rect.right)
-            INPUT_LAYER.append(blocker_pos[2 * x + 1].rect.bottom - player.rect.top)
-    counter_1 += 1
-    #draw_text(screen, str(INPUT_LAYER), 64, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4)
+    if score_timer % timer == 0:
+        score = score + 1
+        score_timer = 0
+    # if len(blocker_pos) > NUMBER_OF_OBS and counter_1 % 800 == 0:
+    #     counter_1 = 0
+    #     INPUT_LAYER = []
+    #     for x in range(0, NUMBER_OF_OBS):
+    #         INPUT_LAYER.append(blocker_pos[2 * x].rect.left - player.rect.right)
+    #         INPUT_LAYER.append(blocker_pos[2 * x].rect.bottom - player.rect.top)
+    #         INPUT_LAYER.append(blocker_pos[2 * x + 1].rect.left - player.rect.right)
+    #         INPUT_LAYER.append(blocker_pos[2 * x + 1].rect.bottom - player.rect.top)
+    # counter_1 += 1
+    draw_text(screen, str(score), 64, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4)
     pygame.display.flip()
 show_go_screen()
 print("Game Over")
