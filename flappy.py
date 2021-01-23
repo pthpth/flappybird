@@ -16,7 +16,7 @@ class blc(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=pos)
 
     def update(self):
-        self.rect.move_ip(-1, 0)
+        self.rect.move_ip(-3, 0)
         if self.rect.left < 100:
             self.kill()
 
@@ -49,7 +49,7 @@ class player(pygame.sprite.Sprite):
             self.rect.top = 0
 
     def fall(self):
-        self.rect.move_ip(0, 3)
+        self.rect.move_ip(0, 4)
         if self.rect.bottom == SCREEN_HEIGHT:
             show_go_screen()
             pygame.quit()
