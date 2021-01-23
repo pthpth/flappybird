@@ -16,7 +16,7 @@ class blc(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=pos)
 
     def update(self):
-        self.rect.move_ip(-3, 0)
+        self.rect.move_ip(-3   , 0)
         if self.rect.left < 100:
             self.kill()
 
