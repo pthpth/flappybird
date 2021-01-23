@@ -9,7 +9,7 @@ from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
 # val = open("values.txt", "a")
 score=0
 
-def sigmogid(z):
+def sigmoid(z):
     return 1 / (1 + np.exp(z * -1))
 
 
